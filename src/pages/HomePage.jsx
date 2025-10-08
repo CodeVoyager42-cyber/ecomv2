@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import ProductLists from "../components/ProductLists";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import Hero from "../components/Hero";
 import WhyChoseUs from "../components/WhyChoseUs";
 import Footer from "../components/Footer";
+=======
+
+>>>>>>> 89d3951b4674bf40a936d5b0b50aacde21917b4a
 function HomePage() {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -45,11 +49,17 @@ function HomePage() {
           </Link>
         </nav>
       </header>
+<<<<<<< HEAD
        <Hero/>
       {/* Product list updates automatically */}
       <ProductLists searchTerm={searchTerm} />
   <WhyChoseUs/>
   <Footer/>
+=======
+
+      {/* Product list updates automatically */}
+      <ProductLists searchTerm={searchTerm} />
+>>>>>>> 89d3951b4674bf40a936d5b0b50aacde21917b4a
     </div>
   );
 }
