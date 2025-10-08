@@ -1,7 +1,7 @@
 import React from "react";
 import { CheckCircleIcon, StarIcon, TruckIcon, HeartIcon } from "@heroicons/react/24/solid";
 
-function WhyChooseUs() {
+export default function WhyChooseUs() {
   const features = [
     {
       title: "High-Quality Products",
@@ -51,5 +51,4 @@ function WhyChooseUs() {
     </section>
   );
 }
-
-export default WhyChooseUs;
+ 

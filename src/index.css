@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @import "tailwindcss";
 
 /* Performance optimizations for smooth scrolling */
@@ -34,6 +33,3 @@ img {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-=======
-@import "tailwindcss";
->>>>>>> 89d3951b4674bf40a936d5b0b50aacde21917b4a
