@@ -1,5 +1,6 @@
 import React from "react";
 import { CheckCircleIcon, StarIcon, TruckIcon, HeartIcon } from "@heroicons/react/24/solid";
+import { motion } from "framer-motion";
 
 export default function WhyChooseUs() {
   const features = [
@@ -25,30 +26,54 @@ export default function WhyChooseUs() {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, staggerChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+  };
+
   return (
     <section className="relative bg-gradient-to-br from-orange-50 to-yellow-50 py-20 px-6 sm:px-10 rounded-lg shadow-inner">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-4xl font-extrabold text-gray-900 mb-6">
           Why Choose <span className="text-yellow-600">Us?</span>
         </h2>
+
         <p className="text-gray-600 mb-12 max-w-2xl mx-auto text-lg">
-          We go above and beyond to make sure you get the best experience — from the moment you browse to the moment your order arrives.
+          We go above and beyond to make sure you get the best experience — from
+          the moment you browse to the moment your order arrives.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {features.map((feature, index) => (
-            <div
+            <motion.div
               key={index}
+              variants={itemVariants}
               className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex justify-center mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                {feature.title}
+              </h3>
               <p className="text-gray-600 text-sm">{feature.desc}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
- 

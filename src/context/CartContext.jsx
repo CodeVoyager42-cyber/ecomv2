@@ -25,6 +25,12 @@ export const CartProvider = ({ children }) => {
       position: "top-right",
       autoClose: 1000,
       theme: "colored",
+       style: {
+        backgroundColor: "#af7640ff",
+        color: "#fff",
+        borderLeft: "5px solid #ef4444",
+        fontWeight: "500",
+      },
     });
   };
 
@@ -32,9 +38,19 @@ export const CartProvider = ({ children }) => {
   const deleteFromCart = (productId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
     toast.info(`Product removed from cart`, {
-      position: "top-right",
-      autoClose: 1000,
-      theme: "colored",
+        position: "top-right",
+        autoClose: 1000,
+        theme: "colored",
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        style: {
+        backgroundColor: "#1f2937",
+        color: "#fff",
+        borderLeft: "5px solid #ef4444",
+        fontWeight: "500",
+      },
     });
   };
 

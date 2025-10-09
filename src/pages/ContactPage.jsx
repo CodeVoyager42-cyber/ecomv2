@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
-
+ 
 function ContactUs() {
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     name: "",
     username: "",
     email: "",
     message: "",
   });
-
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+
+ 
 
   const validate = () => {
     const newErrors = {};
@@ -29,12 +29,13 @@ function ContactUs() {
     if (!formData.message.trim()) newErrors.message = "Message is required.";
     return newErrors;
   };
-
+//This makes it possible to handle all inputs with just one function.
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
+    //Take all the existing error messages, but remove (or clear) the one for the field the user is currently editing.
     setErrors((prev) => ({
       ...prev,
       [e.target.name]: "",
@@ -48,6 +49,7 @@ function ContactUs() {
       // Send data to backend or API here if needed
       console.log("Form data submitted:", formData);
       setSubmitted(true);
+      // reset data after submit
       setFormData({ name: "", username: "", email: "", message: "" });
     } else {
       setErrors(validationErrors);
@@ -182,6 +184,7 @@ function ContactUs() {
           </button>
         </form>
       </section>
+      
     </div>
   );
 }

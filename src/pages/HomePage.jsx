@@ -48,7 +48,9 @@ function HomePage() {
 
       {/* Product list updates automatically */}
       <Hero />
-      <ProductLists searchTerm={searchTerm} />
+      <section id="products" className="mt-10">
+      <ProductLists searchTerm={searchTerm}  />
+      </section>
       <WhyChooseUs />
       <Footer />
     </div>
