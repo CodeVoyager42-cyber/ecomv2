@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import WhyChooseUs from "../components/WhyChooseUs.tsx";
 import Footer from "../components/Footer.tsx";
 import Hero from "../components/Hero.tsx";
+import SupportChatbot from "../components/SupportChatbot.tsx";
 
 const HomePage: React.FC = () => {
   // Type the state as a string
@@ -59,7 +60,9 @@ const HomePage: React.FC = () => {
         <ProductLists searchTerm={searchTerm} />
       </section>
       <WhyChooseUs />
+       
       <Footer />
+      <SupportChatbot />
     </div>
   );
 };
