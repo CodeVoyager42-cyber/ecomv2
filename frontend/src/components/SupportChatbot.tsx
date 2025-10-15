@@ -9,7 +9,7 @@ const SupportChatbot: React.FC = () => {
 
   // 🟡 Fetch products from backend when the chatbot loads
   useEffect(() => {
-    fetch("http://localhost:5000/products")
+    fetch("http://localhost:5000/api/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Error fetching products:", err));
