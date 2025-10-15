@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { MessageSquare, X } from "lucide-react";
-import ProductsData from "../data/data.ts"; // Your products data
 
 const SupportChatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>([]);
   const [input, setInput] = useState<string>("");
+  const [products, setProducts] = useState<any[]>([]);
+
+  // 🟡 Fetch products from backend when the chatbot loads
+  useEffect(() => {
+    fetch("http://localhost:5000/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((err) => console.error("Error fetching products:", err));
+  }, []);
 
   // Load chat state and messages from localStorage
   useEffect(() => {
@@ -16,7 +24,7 @@ const SupportChatbot: React.FC = () => {
     if (savedMessages) setMessages(JSON.parse(savedMessages));
   }, []);
 
-  // Save chat state
+  // Save chat open state
   useEffect(() => {
     localStorage.setItem("chatbotOpen", JSON.stringify(isOpen));
   }, [isOpen]);
@@ -29,44 +37,45 @@ const SupportChatbot: React.FC = () => {
   const handleToggle = () => setIsOpen((prev) => !prev);
 
   const handleSend = () => {
-  if (!input.trim()) return;
+    if (!input.trim()) return;
 
-  const userMessage = { sender: "user", text: input };
-  setMessages((prev) => [...prev, userMessage]);
-  setInput("");
+    const userMessage = { sender: "user", text: input };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
 
-  // Bot response after a short delay
-  setTimeout(() => {
-    const messageLower = input.toLowerCase();
+    setTimeout(() => {
+      const messageLower = input.toLowerCase();
+      let botReply = "";
 
-    let botReply = "";
+      // ✅ Basic greetings
+      const greetings = ["hi", "hello", "hey", "good morning", "good afternoon"];
+      if (greetings.some((g) => messageLower.includes(g))) {
+        botReply = "👋 Hello! Welcome to AmazonPro. How can I help you with our products today?";
+      } 
+      // ✅ Product search (using backend data)
+      else if (products.length > 0) {
+        const words = messageLower.split(" ").filter((w) => w.length > 2);
+        const matchedProduct = products.find((p) =>
+          words.some((word) => p.name.toLowerCase().includes(word))
+        );
 
-    // ✅ Greetings
-    const greetings = ["hi", "hello", "hey", "good morning", "good afternoon"];
-    if (greetings.some((g) => messageLower.includes(g))) {
-      botReply = "👋 Hello! Welcome to AmazonPro. How can I assist you with our products today?";
-    } 
-    // ✅ Product lookup (keyword-based)
-    else {
-      // Filter products whose names include any of the words in the user's input
-      const words = messageLower.split(" ").filter((w) => w.length > 2); // ignore small words
-      const matchedProduct = ProductsData.find((p) =>
-        words.some((word) => p.name.toLowerCase().includes(word))
-      );
-
-      if (matchedProduct) {
-        botReply = `The product "${matchedProduct.name}" costs $${matchedProduct.price.toFixed(
-          2
-        )}. Available sizes: ${matchedProduct.availableSizes.join(", ")}.`;
+        if (matchedProduct) {
+          botReply = `🛒 The product "${matchedProduct.name}" costs $${matchedProduct.price.toFixed(
+            2
+          )}. Available sizes: ${
+            matchedProduct.availableSizes?.join(", ") || "N/A"
+          }.`;
+        } else {
+          botReply =
+            "❌ Sorry, I couldn't find that product. Try typing the product name or a keyword.";
+        }
       } else {
-        botReply =
-          "Sorry, I couldn't find that product. Can you try typing the product name or a keyword?";
+        botReply = "⚠️ I’m still loading the products. Please try again in a moment!";
       }
-    }
 
-    setMessages((prev) => [...prev, { sender: "bot", text: botReply }]);
-  }, 600);
-};
+      setMessages((prev) => [...prev, { sender: "bot", text: botReply }]);
+    }, 600);
+  };
 
   return (
     <div className="fixed bottom-6 right-6 z-50">

@@ -1,29 +1,25 @@
-import React, { createContext, useState, useEffect} from "react";
+import React, { createContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
-import { toast } from "react-toastify";
+import { toast, type ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { storage } from "../utils/storage.ts"; // make sure this import is correct
-import type { ToastOptions } from "react-toastify"; // ✅ type-only import
-
-// Define the product type (match your ProductLists / bootsData)
+import { storage } from "../utils/storage.ts";
 
 // ✅ Define the product interface
 export interface Product {
   id: number;
   name: string;
-  description: string;
   price: number;
-  image: string;
+  image?: string;
 }
 
 // ✅ Define the context type
-export interface CartContextType {
+interface CartContextType {
   cart: Product[];
   addToCart: (product: Product) => void;
   deleteFromCart: (productId: number) => void;
 }
 
-// ✅ Create context with undefined default
+// ✅ Create the context (export it so other components can import it)
 export const CartContext = createContext<CartContextType | undefined>(undefined);
 
 // ✅ Props type for provider
@@ -34,12 +30,10 @@ interface CartProviderProps {
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<Product[]>(() => storage.get("cart") || []);
 
-  // ✅ Persist cart to localStorage on every change
   useEffect(() => {
     storage.set("cart", cart);
   }, [cart]);
 
-  // ✅ Add product to cart
   const addToCart = (product: Product) => {
     setCart((prev) => [...prev, product]);
 
@@ -58,7 +52,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     toast.success(`${product.name} added to cart!`, toastOptions);
   };
 
-  // ✅ Delete product from cart
   const deleteFromCart = (productId: number) => {
     setCart((prev) => prev.filter((item) => item.id !== productId));
 

@@ -4,6 +4,8 @@ import type { ChangeEvent } from "react";
 import { storage } from "../utils/storage.ts";
 import { CartContext } from "../context/CartContext.tsx"; // ✅ runtime import
 import type { Product } from "../context/CartContext.tsx"; // ✅ type-only import
+import Footer from "../components/Footer.tsx";
+ 
 
 
 interface SelectedSizes {
@@ -42,13 +44,21 @@ const ProductsPage: React.FC = () => {
   const totalPrice = cart.reduce((sum, product) => sum + product.price, 0);
 
   return (
-    <div className="p-6">
+    <> 
+    <div className="container mx-auto p-4 flex flex-col min-h-screen">
+      <div className="flex justify-between items-center mb-4">
+      {/* Navigation Links */}
       <Link to="/">
         <h1 className="text-lg font-semibold text-yellow-600 cursor-pointer hover:text-yellow-700 transition-colors">
           Home
         </h1>
       </Link>
-
+      <Link to="/Contact">
+        <h1 className="text-lg font-semibold text-yellow-600 cursor-pointer hover:text-yellow-700 transition-colors text-right">
+          Contact
+        </h1>
+      </Link>
+ </div>
       {/* Cart Summary */}
       {cart.length > 0 && (
         <div className="my-6 p-4 border rounded-lg bg-gray-50 shadow">
@@ -130,8 +140,13 @@ const ProductsPage: React.FC = () => {
       ) : (
         <p className="text-gray-500 mt-6">Your cart is empty.</p>
       )}
-    </div>
+       
+    </div>  
+    
+          <Footer />
+ </>
   );
+  
 };
 
 export default ProductsPage;
