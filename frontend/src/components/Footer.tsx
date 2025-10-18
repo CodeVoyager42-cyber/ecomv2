@@ -9,128 +9,99 @@ import {
 } from "react-icons/fa";
 
 const Footer: React.FC = () => {
-  // ✅ State for email input and message
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  // ✅ Make it async to use await
   const handleSubscribe = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+   // 📨 Send a request to the backend to subscribe a user by email
+try {
+  // Send a POST request to your backend API endpoint
+  const response = await fetch("http://localhost:5000/api/subscribe", {
+    method: "POST", // HTTP method used for creating or sending data
+    headers: {
+      "Content-Type": "application/json", // Tell the server you're sending JSON
+    },
+    body: JSON.stringify({ email }), // Convert the email object to JSON string
+  });
 
-    try {
-      const response = await fetch("http://localhost:5000/api/subscribe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
+  // Parse the JSON response from the backend
+  const data = await response.json();
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage("✅ Subscription successful!");
-        setEmail("");
-      } else {
-        setMessage(`❌ ${data.message}`);
-      }
-    } catch (error) {
-      console.error("Error subscribing:", error);
-      setMessage("⚠️ Error connecting to server");
-    }
+  // ✅ If the request was successful (status code 200–299)
+  if (response.ok) {
+    setMessage("✅ Subscription successful!"); // Show success message
+    setEmail(""); // Clear the email input field
+  } else {
+    // ❌ If the backend returned an error response
+    setMessage(`❌ ${data.message}`); // Display the error message from backend
+  }
+} catch (error) {
+  // ⚠️ If there was a network error or server connection issue
+  console.error("Error subscribing:", error);
+  setMessage("⚠️ Error connecting to server"); // Show generic connection error
+}
   };
 
   return (
-    <footer className="bg-gray-900 text-gray-300 pt-16 pb-8">
+    <footer className="bg-gray-900 text-gray-300 pt-14 pb-6">
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-gray-700 pb-10">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 border-b border-gray-700 pb-10">
+        
         {/* About Section */}
-        <div>
+        <div className="text-center sm:text-left">
           <h2 className="text-2xl font-bold text-white mb-4">AmazonPro</h2>
           <p className="text-gray-400 leading-relaxed mb-4">
             Your go-to destination for premium shoes — blending comfort, style,
             and quality. Step into confidence with every pair.
           </p>
 
-          <div className="flex space-x-4 mt-4">
-            <a
-              href="#"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-yellow-600 transition-colors"
-              aria-label="Facebook"
-            >
-              <FaFacebookF />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-yellow-600 transition-colors"
-              aria-label="Instagram"
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-yellow-600 transition-colors"
-              aria-label="Twitter"
-            >
-              <FaTwitter />
-            </a>
-            <a
-              target="_blank"
-              href="https://www.linkedin.com/in/mouad-el-02245b194/"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-yellow-600 transition-colors"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedinIn />
-            </a>
-
-            {/* GitHub icon */}
-            <a
-              href="https://github.com/CodeVoyager42-cyber"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-yellow-600 transition-colors"
-              aria-label="GitHub"
-            >
-              <FaGithub />
-            </a>
+          {/* Social Links */}
+          <div className="flex justify-center sm:justify-start flex-wrap gap-3 mt-4">
+            {[
+              { icon: <FaFacebookF />, link: "#" },
+              { icon: <FaInstagram />, link: "#" },
+              { icon: <FaTwitter />, link: "#" },
+              { icon: <FaLinkedinIn />, link: "https://www.linkedin.com/in/mouad-el-02245b194/" },
+              { icon: <FaGithub />, link: "https://github.com/CodeVoyager42-cyber" },
+            ].map(({ icon, link }, i) => (
+              <a
+                key={i}
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-yellow-600 text-white transition-colors"
+              >
+                {icon}
+              </a>
+            ))}
           </div>
         </div>
 
         {/* Quick Links */}
-        <div>
+        <div className="text-center sm:text-left">
           <h3 className="text-xl font-semibold text-white mb-4">Quick Links</h3>
           <ul className="space-y-2">
-            <li>
-              <a href="/" className="hover:text-yellow-500 transition-colors">
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="/products"
-                className="hover:text-yellow-500 transition-colors"
-              >
-                Shop
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-yellow-500 transition-colors">
-                About Us
-              </a>
-            </li>
-            <li>
-              <a
-                href="/contact"
-                className="hover:text-yellow-500 transition-colors"
-              >
-                Contact
-              </a>
-            </li>
+            {[
+              { name: "Home", path: "/" },
+              { name: "Shop", path: "/products" },
+              { name: "About Us", path: "#" },
+              { name: "Contact", path: "/contact" },
+            ].map(({ name, path }, i) => (
+              <li key={i}>
+                <a
+                  href={path}
+                  className="hover:text-yellow-500 transition-colors duration-200"
+                >
+                  {name}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Newsletter */}
-        <div>
+        <div className="text-center sm:text-left">
           <h3 className="text-xl font-semibold text-white mb-4">Stay Updated</h3>
           <p className="text-gray-400 mb-4">
             Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.
@@ -138,7 +109,7 @@ const Footer: React.FC = () => {
 
           <form
             onSubmit={handleSubscribe}
-            className="flex flex-col sm:flex-row items-center gap-3"
+            className="flex flex-col sm:flex-row items-center sm:items-stretch gap-3"
           >
             <input
               type="email"
@@ -156,17 +127,14 @@ const Footer: React.FC = () => {
             </button>
           </form>
 
-          {/*  Show feedback message */}
-          {message && (
-            <p className="text-sm mt-3 text-yellow-400">{message}</p>
-          )}
+          {message && <p className="text-sm mt-3 text-yellow-400">{message}</p>}
         </div>
       </div>
 
       {/* Bottom Footer */}
-      <div className="max-w-7xl mx-auto px-6 mt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
+      <div className="max-w-7xl mx-auto px-6 mt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500 text-center">
         <p>© {new Date().getFullYear()} AmazonPro. All rights reserved.</p>
-        <div className="flex space-x-4 mt-2 sm:mt-0">
+        <div className="flex justify-center space-x-4 mt-3 sm:mt-0">
           <a href="#" className="hover:text-yellow-500 transition-colors">
             Privacy Policy
           </a>

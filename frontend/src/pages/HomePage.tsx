@@ -36,9 +36,9 @@ const HomePage: React.FC = () => {
 
         {/* Right: Navigation */}
         <nav className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 mt-3 sm:mt-0">
-          <Link to="/">
+          <Link to="/RegisterFormPage">
             <h1 className="text-lg font-semibold text-yellow-600 cursor-pointer hover:text-yellow-700 transition-colors">
-              Home
+              Sign up
             </h1>
           </Link>
           <Link to="/products">

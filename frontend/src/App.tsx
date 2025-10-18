@@ -2,8 +2,10 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage.tsx";
 import ProductsPage from "./pages/ProductsPage.tsx";
-import ContactPage from "./pages/ContactPage.tsx"; // If you have it
-import './index.css'; // or './App.css'
+import ContactPage from "./pages/ContactPage.tsx";
+import './index.css'; 
+import RegisterFromPage from "./pages/RegisterFromPage.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
 
 const App: React.FC = () => {
   return (
@@ -12,6 +14,8 @@ const App: React.FC = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/RegisterFormPage" element={<RegisterFromPage />} />
+        <Route path="/LoginPage" element={<LoginPage />} />
       </Routes>
     </Router>
   );
