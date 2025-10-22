@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    // Target & Module
+    "target": "ESNext",                        // Latest JS features
+    "module": "NodeNext",                       // Node16/NodeNext module resolution
+    "moduleResolution": "NodeNext",            // Resolve modules like Node
+    "esModuleInterop": true,                   // Compatibility with CommonJS
+    "allowSyntheticDefaultImports": true,      // Allow default imports from non-ES modules
+    "verbatimModuleSyntax": true,  
+     "allowImportingTsExtensions": true,            // Preserve import/export syntax
+    
+    // JSX & React
+    "jsx": "react-jsx",                         // Use React 18 JSX transform
+    
+    // Strict Type-Checking
+    "strict": true,                             // Enable all strict checks
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "isolatedModules": true,                    // Required for modern React projects
+    
+    // Output
+    "sourceMap": true,                          // For debugging
+    "declaration": true,
+    "declarationMap": true,
+    
+    // Node + DOM types
+    "lib": ["DOM", "ESNext"],                   // Browser + latest JS
+    "types": ["node"],                          // Node types
+    
+    // Style & Safety
+    "skipLibCheck": true,                       // Skip type-checking of libraries
+    "forceConsistentCasingInFileNames": true,  // Enforce consistent casing
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": ["src"],                           // Include your source files
+  "exclude": ["node_modules", "dist"]          // Exclude dependencies and output
+}
