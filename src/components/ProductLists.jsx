@@ -14,7 +14,7 @@ function ProductLists({ searchTerm }) {
   );
 
   // Add-to-cart handler with loading animation + toast
-  const handleAddToCart = (product) => {
+    const handleAddToCart = (product) => {
     const alreadyAdded = cart.some((item) => item.id === product.id);
     if (alreadyAdded) {
       toast.error(`${product.name} is already in your cart!`, {
@@ -33,12 +33,12 @@ function ProductLists({ searchTerm }) {
   };
 
   // Animation variants for smoother entrance
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: (index) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
+        const cardVariants = {
+        hidden: { opacity: 0, y: 50 },
+        visible: (index) => ({
+        opacity: 1,
+        y: 0,
+        transition: {
         duration: 0.6,
         delay: index * 0.1, // staggered delay for each card
         ease: "easeOut",

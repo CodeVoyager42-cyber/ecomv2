@@ -3,6 +3,7 @@ import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import { storage } from "../utils/storage"; // ✅ lowercase here
 import { useNavigate } from "react-router-dom";
+import { div } from "framer-motion/client";
 
 function ProductsPage() {
   const { cart, deleteFromCart } = useContext(CartContext);
@@ -117,7 +118,9 @@ function ProductsPage() {
           ))}
         </div>
       ) : (
-        <p className="text-gray-500 mt-6">Your cart is empty.</p>
+        <div className="flex flex-col items-center justify-center mt-50">
+          <p className="text-gray-900 mt-6 text-6xl font-bold text-center  ">Your cart is <span className="text-yellow-600">empty</span>  </p>
+        </div>
       )}
     </div>
   );
